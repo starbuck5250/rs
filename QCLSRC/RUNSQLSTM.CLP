@@ -1,0 +1,364 @@
+000100070309                        /* RUN A SQL STATEMENT */
+000200070309
+000300070309PGM        (&SQLSTM  +
+000400070309            &OUTPUT  +
+000500070309            &OUTFILE +
+000600070309            &OUT_MBR +
+000700070309            &MBROPT  +
+000800070309            &PAGESIZ +
+000900070309            &LPI     +
+001000070309            &CPI     +
+001100070309            &OVRFLW  +
+001200070309            &PRTSTM  +
+001300070309            &RDB     +
+001400070309            &FORM    +
+001500070309            &NAMING)
+001600070309
+001700070309DCL        &SQLSTM  *CHAR 1280
+001800070309DCL        &OUTPUT  *CHAR 8
+001900070309DCL        &OUTFILE *CHAR 20
+002000070309DCL        &OUT_MBR *CHAR 10
+002100070309DCL        &MBROPT  *CHAR 8
+002200070309DCL        &OUT_NAM *CHAR 10
+002300070309DCL        &OUT_LIB *CHAR 10
+002400070309DCL        &NAMING  *CHAR 11
+002500070309DCL        &RDB     *CHAR 15
+002600070309DCL        &FORM    *CHAR 20
+002700070309DCL        &FRM_NAM *CHAR 10
+002800070309DCL        &FRM_LIB *CHAR 10
+002900070309DCL        &PAGESIZ *CHAR 10
+003000070309DCL        &PG_LEN  *DEC (3 0)
+003100070309DCL        &PG_WID  *DEC (3 0)
+003200070309DCL        &CPI     *DEC (3 0)
+003300070309DCL        &LPI     *DEC (1 0)
+003400070309DCL        &OVRFLW  *DEC (3 0)
+003500070309DCL        &PRTSTM  *CHAR  4
+003600070309DCL        &A       *CHAR 50
+003700070309DCL        &B       *CHAR 50
+003800070309DCL        &C       *CHAR 50
+003900070309DCL        &D       *CHAR 50
+004000070309DCL        &E       *CHAR 50
+004100070309DCL        &F       *CHAR 50
+004200070309DCL        &G       *CHAR 50
+004300070309DCL        &H       *CHAR 50
+004400070309DCL        &I       *CHAR 50
+004500070309DCL        &J       *CHAR 50
+004600070309DCL        &K       *CHAR 50
+004700070309DCL        &L       *CHAR 50
+004800070309DCL        &M       *CHAR 50
+004900070309DCL        &N       *CHAR 50
+005000070309DCL        &O       *CHAR 50
+005100070309DCL        &P       *CHAR 50
+005200070309DCL        &Q       *CHAR 50
+005300070309DCL        &R       *CHAR 50
+005400070309DCL        &S       *CHAR 50
+005500070309DCL        &T       *CHAR 50
+005600070309DCL        &U       *CHAR 50
+005700070309DCL        &V       *CHAR 50
+005800070309DCL        &W       *CHAR 50
+005900070309DCL        &X       *CHAR 50
+006000070309DCL        &Y       *CHAR 50
+006100070309DCL        &Z       *CHAR 30
+006200070309
+006300070309DCL        &ERRORSW *LGL                     /* Std err */
+006400070309DCL        &MSGID *CHAR LEN(7)               /* Std err */
+006500070309DCL        &MSGDTA *CHAR LEN(100)            /* Std err */
+006600070309DCL        &MSGF *CHAR LEN(10)               /* Std err */
+006700070309DCL        &MSGFLIB *CHAR LEN(10)            /* Std err */
+006800070309
+006900070309MONMSG     MSGID(CPF0000 QWM0000) EXEC(GOTO STDERR1) /* Std err */
+007000070309
+007100070309/* Parse the input */
+007200070309
+007300070309CHGVAR     &FRM_NAM %SST(&FORM 01 10)
+007400070309CHGVAR     &FRM_LIB %SST(&FORM 11 10)
+007500070309CHGVAR     &PG_LEN %SST(&PAGESIZ 03 03)
+007600070309CHGVAR     &PG_WID %SST(&PAGESIZ 06 03)
+007700070309
+007800070309/* Adjust to fit 50 char blocks */
+007900070309CALL RUNSQLSTM2 &SQLSTM
+008000070309
+008100070309/* Set up the variables */
+008200070309CHGVAR &A %SST(&SQLSTM 0001 50)
+008300070309CHGVAR &B %SST(&SQLSTM 0051 50)
+008400070309CHGVAR &C %SST(&SQLSTM 0101 50)
+008500070309CHGVAR &D %SST(&SQLSTM 0151 50)
+008600070309CHGVAR &E %SST(&SQLSTM 0201 50)
+008700070309CHGVAR &F %SST(&SQLSTM 0251 50)
+008800070309CHGVAR &G %SST(&SQLSTM 0301 50)
+008900070309CHGVAR &H %SST(&SQLSTM 0351 50)
+009000070309CHGVAR &I %SST(&SQLSTM 0401 50)
+009100070309CHGVAR &J %SST(&SQLSTM 0451 50)
+009200070309CHGVAR &K %SST(&SQLSTM 0501 50)
+009300070309CHGVAR &L %SST(&SQLSTM 0551 50)
+009400070309CHGVAR &M %SST(&SQLSTM 0601 50)
+009500070309CHGVAR &N %SST(&SQLSTM 0651 50)
+009600070309CHGVAR &O %SST(&SQLSTM 0701 50)
+009700070309CHGVAR &P %SST(&SQLSTM 0751 50)
+009800070309CHGVAR &Q %SST(&SQLSTM 0801 50)
+009900070309CHGVAR &R %SST(&SQLSTM 0851 50)
+010000070309CHGVAR &S %SST(&SQLSTM 0901 50)
+010100070309CHGVAR &T %SST(&SQLSTM 0951 50)
+010200070309CHGVAR &U %SST(&SQLSTM 1001 50)
+010300070309CHGVAR &V %SST(&SQLSTM 1051 50)
+010400070309CHGVAR &W %SST(&SQLSTM 1101 50)
+010500070309CHGVAR &X %SST(&SQLSTM 1151 50)
+010600070309CHGVAR &Y %SST(&SQLSTM 1201 50)
+010700070309CHGVAR &Z %SST(&SQLSTM 1251 30)
+010800070309
+010900070309IF         (&OVRFLW *EQ 999) +
+011000070309      CHGVAR &OVRFLW (&PG_LEN - &LPI)
+011100070309
+011200070309IF         (&OUTPUT *EQ '*OUTFILE') DO
+011300070309      CHGVAR &OUT_NAM %SST(&OUTFILE 01 10)
+011400070309      CHGVAR &OUT_LIB %SST(&OUTFILE 11 10)
+011500070309
+011600070309      IF ((&OUT_LIB *NE '*CURLIB') *AND +
+011700070309          (&OUT_LIB *NE '*LIBL')) DO
+011800070309
+011900070309            CHKOBJ &OUT_LIB *LIB
+012000070309            MONMSG CPF9801 EXEC(DO)
+012100070309                  SNDPGMMSG MSGID(CPF9898) MSGF(QCPFMSG) +
+012200070309                     MSGDTA('Output library' *BCAT +
+012300070309                     &OUT_LIB *BCAT 'not found') +
+012400070309                     MSGTYPE(*ESCAPE)
+012500070309                  RCLRSC
+012600070309                  RETURN
+012700070309
+012800070309            ENDDO
+012900070309
+013000070309      ENDDO
+013100070309
+013200070309/* Run the SQL stmt via QM query */
+013300070309
+013400070309   IF (&FRM_NAM *EQ '*SYSDFT') DO
+013500070309      STRQMQRY QMQRY(RUNSQLSTM) +
+013600070309               OUTPUT(&OUTPUT) +
+013700070309               OUTFILE(&OUT_LIB/&OUT_NAM) +
+013800070309               OUTMBR(&OUT_MBR &MBROPT) +
+013900070309               SETVAR((A &A) +
+014000070309                      (B &B) +
+014100070309                      (C &C) +
+014200070309                      (D &D) +
+014300070309                      (E &E) +
+014400070309                      (F &F) +
+014500070309                      (G &G) +
+014600070309                      (H &H) +
+014700070309                      (I &I) +
+014800070309                      (J &J) +
+014900070309                      (K &K) +
+015000070309                      (L &L) +
+015100070309                      (M &M) +
+015200070309                      (N &N) +
+015300070309                      (O &O) +
+015400070309                      (P &P) +
+015500070309                      (Q &Q) +
+015600070309                      (R &R) +
+015700070309                      (S &S) +
+015800070309                      (T &T) +
+015900070309                      (U &U) +
+016000070309                      (V &V) +
+016100070309                      (W &W) +
+016200070309                      (X &X) +
+016300070309                      (Y &Y) +
+016400070309                      (Z &Z)) +
+016500070309               NAMING(&NAMING) +
+016600070309               RDB(&RDB) +
+016700070309               QMFORM(*SYSDFT)
+016800070309   ENDDO
+016900070309
+017000070309   IF (&FRM_NAM *NE '*SYSDFT') DO
+017100070309      STRQMQRY QMQRY(RUNSQLSTM) +
+017200070309               OUTPUT(&OUTPUT) +
+017300070309               OUTFILE(&OUT_LIB/&OUT_NAM) +
+017400070309               OUTMBR(&OUT_MBR &MBROPT) +
+017500070309               SETVAR((A &A) +
+017600070309                      (B &B) +
+017700070309                      (C &C) +
+017800070309                      (D &D) +
+017900070309                      (E &E) +
+018000070309                      (F &F) +
+018100070309                      (G &G) +
+018200070309                      (H &H) +
+018300070309                      (I &I) +
+018400070309                      (J &J) +
+018500070309                      (K &K) +
+018600070309                      (L &L) +
+018700070309                      (M &M) +
+018800070309                      (N &N) +
+018900070309                      (O &O) +
+019000070309                      (P &P) +
+019100070309                      (Q &Q) +
+019200070309                      (R &R) +
+019300070309                      (S &S) +
+019400070309                      (T &T) +
+019500070309                      (U &U) +
+019600070309                      (V &V) +
+019700070309                      (W &W) +
+019800070309                      (X &X) +
+019900070309                      (Y &Y) +
+020000070309                      (Z &Z)) +
+020100070309               NAMING(&NAMING) +
+020200070309               RDB(&RDB) +
+020300070309               QMFORM(&FRM_LIB/&FRM_NAM)
+020400070309   ENDDO
+020500070309
+020600070309RCLRSC
+020700070309RETURN
+020800070309ENDDO
+020900070309
+021000070309/* This one has no OUTFILE statement */
+021100070309
+021200070309OVRPRTF QPQXPRTF PAGESIZE(&PG_LEN &PG_WID) +
+021300070309                 LPI(&LPI) +
+021400070309                 CPI(&CPI) +
+021500081126                 CTLCHAR(*NONE) +
+021600070309                 OVRFLW(&OVRFLW)
+021700070309
+021800070309IF ((&PRTSTM *EQ '*YES') *AND +
+021900070309    (&OUTPUT *EQ '*PRINT')) +
+022000070309CALL RUNSQLSTMR PARM(&A +
+022100070309                     &B +
+022200070309                     &C +
+022300070309                     &D +
+022400070309                     &E +
+022500070309                     &F +
+022600070309                     &G +
+022700070309                     &H +
+022800070309                     &I +
+022900070309                     &J +
+023000070309                     &K +
+023100070309                     &L +
+023200070309                     &M +
+023300070309                     &N +
+023400070309                     &O +
+023500070309                     &P +
+023600070309                     &Q +
+023700070309                     &R +
+023800070309                     &S +
+023900070309                     &T +
+024000070309                     &U +
+024100070309                     &V +
+024200070309                     &W +
+024300070309                     &X +
+024400070309                     &Y +
+024500070309                     &Z) +
+024600070309
+024700070309IF (&FRM_NAM *EQ '*SYSDFT') DO
+024800070309STRQMQRY QMQRY(RUNSQLSTM) +
+024900070309         OUTPUT(&OUTPUT) +
+025000070309               SETVAR((A &A) +
+025100070309                      (B &B) +
+025200070309                      (C &C) +
+025300070309                      (D &D) +
+025400070309                      (E &E) +
+025500070309                      (F &F) +
+025600070309                      (G &G) +
+025700070309                      (H &H) +
+025800070309                      (I &I) +
+025900070309                      (J &J) +
+026000070309                      (K &K) +
+026100070309                      (L &L) +
+026200070309                      (M &M) +
+026300070309                      (N &N) +
+026400070309                      (O &O) +
+026500070309                      (P &P) +
+026600070309                      (Q &Q) +
+026700070309                      (R &R) +
+026800070309                      (S &S) +
+026900070309                      (T &T) +
+027000070309                      (U &U) +
+027100070309                      (V &V) +
+027200070309                      (W &W) +
+027300070309                      (X &X) +
+027400070309                      (Y &Y) +
+027500070309                      (Z &Z)) +
+027600070309               NAMING(&NAMING) +
+027700070309               RDB(&RDB) +
+027800070309               QMFORM(*SYSDFT)
+027900070309ENDDO
+028000070309
+028100070309IF (&FRM_NAM *NE '*SYSDFT') DO
+028200070309STRQMQRY QMQRY(RUNSQLSTM) +
+028300070309         OUTPUT(&OUTPUT) +
+028400070309               SETVAR((A &A) +
+028500070309                      (B &B) +
+028600070309                      (C &C) +
+028700070309                      (D &D) +
+028800070309                      (E &E) +
+028900070309                      (F &F) +
+029000070309                      (G &G) +
+029100070309                      (H &H) +
+029200070309                      (I &I) +
+029300070309                      (J &J) +
+029400070309                      (K &K) +
+029500070309                      (L &L) +
+029600070309                      (M &M) +
+029700070309                      (N &N) +
+029800070309                      (O &O) +
+029900070309                      (P &P) +
+030000070309                      (Q &Q) +
+030100070309                      (R &R) +
+030200070309                      (S &S) +
+030300070309                      (T &T) +
+030400070309                      (U &U) +
+030500070309                      (V &V) +
+030600070309                      (W &W) +
+030700070309                      (X &X) +
+030800070309                      (Y &Y) +
+030900070309                      (Z &Z)) +
+031000070309               NAMING(&NAMING) +
+031100070309               RDB(&RDB) +
+031200070309               QMFORM(&FRM_LIB/&FRM_NAM)
+031300070309ENDDO
+031400070309
+031500070309RCLRSC
+031600070309RETURN
+031700070309
+031800070309STDERR1: /* Standard error handling routine */
+031900070309
+032000070309/* Set "Error in progress" switch */
+032100070309IF &ERRORSW SNDPGMMSG MSGID(CPF9999) +
+032200070309                      MSGF(QCPFMSG)  +
+032300070309                      MSGTYPE(*ESCAPE) /* Func chk */
+032400070309IF &ERRORSW (GOTO END)
+032500070309CHGVAR &ERRORSW '1' /* Set to fail if error occurs */
+032600070309
+032700070309/* Re-send diagnostic messages */
+032800070309STDERR2:
+032900070309RCVMSG MSGTYPE(*DIAG) +
+033000070309       PGMQ(*SAME *) +
+033100070309       MSGDTA(&MSGDTA) +
+033200070309       MSGID(&MSGID) +
+033300070309       MSGF(&MSGF)  +
+033400070309       MSGFLIB(&MSGFLIB)
+033500070309MONMSG CPF0000 EXEC(GOTO STDERR3)
+033600070309IF (&MSGID *EQ '       ') GOTO STDERR3
+033700070309SNDPGMMSG MSGID(&MSGID) +
+033800070309          MSGF(&MSGFLIB/&MSGF) +
+033900070309          MSGDTA(&MSGDTA) +
+034000070309          MSGTYPE(*DIAG)
+034100070309GOTO STDERR2 /* Loop back for addl diagnostics */
+034200070309
+034300070309/* Re-send escape messages */
+034400070309STDERR3:
+034500070309RCVMSG MSGTYPE(*EXCP) +
+034600070309       MSGDTA(&MSGDTA) +
+034700070309       MSGID(&MSGID) +
+034800070309       MSGF(&MSGF)  +
+034900070309       MSGFLIB(&MSGFLIB)
+035000070309MONMSG CPF0000
+035100070309
+035200070309SNDPGMMSG MSGID(&MSGID) +
+035300070309          MSGF(&MSGFLIB/&MSGF) +
+035400070309          MSGDTA(&MSGDTA) +
+035500070309          MSGTYPE(*ESCAPE)
+035600070309SNDPGMMSG MSGID(CPF9898) +
+035700070309          MSGF(QCPFMSG) +
+035800070309          MSGDTA('RUNSQLSTM failed') +
+035900070309          MSGTYPE(*ESCAPE)
+036000070309
+036100070309END:
+036200070309RCLRSC
+036300070309             ENDPGM
+036400070309
